@@ -14,6 +14,8 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainScreenRepoImpl : RepositoryInt.MainScreenRepo {
+    private val key =
+        "dict.1.1.20220613T083359Z.fcd4b0897bfdb28c.6f755fcc2b10cf9e97feb39fa83657ef2263a98a"
     private val client = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -26,9 +28,10 @@ class MainScreenRepoImpl : RepositoryInt.MainScreenRepo {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     private val api: RetrofitInt = retrofit.create(RetrofitInt::class.java)
+
     override fun languages(): Observable<List<String>> {
         return Observable.create { subscriber ->
-            api.getLanguages("dict.1.1.20220613T083359Z.fcd4b0897bfdb28c.6f755fcc2b10cf9e97feb39fa83657ef2263a98a")
+            api.getLanguages(key)
                 .enqueue(object : Callback<List<String>> {
                     override fun onResponse(
                         call: Call<List<String>>,
@@ -46,5 +49,20 @@ class MainScreenRepoImpl : RepositoryInt.MainScreenRepo {
         }
     }
 
+    override fun getTranslation(lang: String, text: String): Observable<ResultDTO> {
+        return Observable.create { subscriber2 ->
+            api.getTranslation(key, lang, text).enqueue(object : Callback<ResultDTO> {
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    response.body()?.let {
+                        subscriber2.onNext(it)
+                    }
+                }
 
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    t.message?.let { Log.d("TAG", it) }
+                }
+
+            })
+        }
+    }
 }

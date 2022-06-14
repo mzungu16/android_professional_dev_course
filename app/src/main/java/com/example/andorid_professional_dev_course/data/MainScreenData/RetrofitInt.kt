@@ -9,4 +9,11 @@ interface RetrofitInt {
     fun getLanguages(
         @Query("key") apiKey: String
     ): Call<List<String>>
+
+    @GET("/api/v1/dicservice.json/lookup")
+    fun getTranslation(
+        @Query("key") apiKey: String,
+        @Query("lang") lang: String,
+        @Query("text") text: String
+    ):Call<ResultDTO>
 }
