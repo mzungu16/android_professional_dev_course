@@ -1,8 +1,10 @@
 package com.example.andorid_professional_dev_course.ui.mainScreen
 
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import com.example.andorid_professional_dev_course.R
 import com.example.andorid_professional_dev_course.app
@@ -24,9 +26,10 @@ class MainActivity : AppCompatActivity() {
             app.presenter.translateMethod(
                 binding.spinnerList.selectedItem.toString(),
                 binding.editText.text.toString()
-            ){
-                Log.d("TAG",it.def[0].tr[0].text)
-                binding.resultText.text = it.def[0].tr[0].text
+            ) {
+                binding.layout.visibility = View.VISIBLE
+                binding.resultText.text = it.def.first().tr.first().text
+                binding.posId.text = it.def.first().pos
             }
         }
     }
