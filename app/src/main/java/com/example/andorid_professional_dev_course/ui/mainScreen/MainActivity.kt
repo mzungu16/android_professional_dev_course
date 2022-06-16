@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andorid_professional_dev_course.R
 import com.example.andorid_professional_dev_course.app
 import com.example.andorid_professional_dev_course.databinding.ActivityMainBinding
@@ -13,6 +15,7 @@ import com.example.andorid_professional_dev_course.domain.Contracts
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val mainScreenAdapter = MainScreenAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,12 +30,14 @@ class MainActivity : AppCompatActivity() {
                 binding.spinnerList.selectedItem.toString(),
                 binding.editText.text.toString()
             ) {
-                binding.layout.visibility = View.VISIBLE
-                binding.resultText.text = it.def.first().tr.first().text
-                binding.posId.text = it.def.first().pos
-                binding.syn1.text = it.def.first().tr.first().syn[0].text
-                binding.syn2.text = it.def.first().tr.first().syn[1].text
-                binding.syn3.text = it.def.first().tr.first().syn[2].text
+                mainScreenAdapter.list = it.def.first().tr.first().syn
+                binding.insideLayout.inside.visibility = View.VISIBLE
+                binding.insideLayout.translateResult.text = it.def.first().tr.first().text
+                binding.insideLayout.posResult.text = it.def.first().pos
+                binding.insideLayout.recyclerView.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = mainScreenAdapter
+                }
             }
         }
     }

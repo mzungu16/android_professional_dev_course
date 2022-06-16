@@ -4,160 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.mainScreen.MainActivity">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/botton_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/botton_navigation"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outline_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="3"
-            android:hint="Слово">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <LinearLayout
-            android:id="@+id/linear_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/translate_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_translate" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/material_view2"
+                style="@style/material_card_style"
+                app:cardBackgroundColor="@color/lt_red">
 
-            <Spinner
-                android:id="@+id/spinner_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp" />
-            <ImageView
-                android:id="@+id/add_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_done" />
+                <EditText
+                    android:id="@+id/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:textSize="25sp"
+                    android:background="@color/lt_red"
+                    android:hint="Слово..." />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/material_view"
+                style="@style/material_card_style"
+                app:cardBackgroundColor="@color/lt_grey">
+
+                <include
+                    android:id="@+id/inside_layout"
+                    layout="@layout/inside_layout" />
+
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/material_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="3"
-            android:background="@color/lt_grey"
-            app:cardCornerRadius="10dp"
-            app:strokeColor="@color/black"
-            app:strokeWidth="0.7dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="30dp"
+            android:elevation="20dp">
 
-            <LinearLayout
-                android:id="@id/layout"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/result_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    tools:text="Translation" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Часть речи - "
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/pos_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        tools:text="asdasd " />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="Синонимы - "
-                        android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/syn1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:textColor="@color/black"
-                            tools:text="asdasd " />
-
-                        <TextView
-                            android:id="@+id/syn2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            tools:text="asdasd " />
-
-                        <TextView
-                            android:id="@+id/syn3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            tools:text="asdasd " />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
+            <ImageView
+                android:id="@+id/translate_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_sync" />
         </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinner_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="100dp" />
+
+    </FrameLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/botton_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/lt_grey"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

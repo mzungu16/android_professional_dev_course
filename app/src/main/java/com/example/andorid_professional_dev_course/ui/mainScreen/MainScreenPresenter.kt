@@ -5,6 +5,7 @@ import android.widget.Spinner
 import com.example.andorid_professional_dev_course.R
 import com.example.andorid_professional_dev_course.data.MainScreenData.MainScreenRepoImpl
 import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
+import com.example.andorid_professional_dev_course.data.MainScreenData.Synonyms
 import com.example.andorid_professional_dev_course.domain.Contracts
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -12,6 +13,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainScreenPresenter(val mainScreenRepo: MainScreenRepoImpl) : Contracts.MainScreenPresenter {
     private var activity: MainActivity? = null
+    private lateinit var listOfSyn: List<Synonyms>
     override fun attach(paramActivity: MainActivity) {
         activity = paramActivity
     }
@@ -28,6 +30,7 @@ class MainScreenPresenter(val mainScreenRepo: MainScreenRepoImpl) : Contracts.Ma
         mainScreenRepo.getTranslation(lang, text).subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                listOfSyn = it.def.first().tr.first().syn
                 callback(it)
             },
                 {
