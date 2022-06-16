@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
                 binding.layout.visibility = View.VISIBLE
                 binding.resultText.text = it.def.first().tr.first().text
                 binding.posId.text = it.def.first().pos
+                binding.syn1.text = it.def.first().tr.first().syn[0].text
+                binding.syn2.text = it.def.first().tr.first().syn[1].text
+                binding.syn3.text = it.def.first().tr.first().syn[2].text
             }
         }
     }
