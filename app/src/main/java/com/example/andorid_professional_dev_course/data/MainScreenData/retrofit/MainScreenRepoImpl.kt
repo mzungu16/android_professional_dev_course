@@ -1,9 +1,9 @@
-package com.example.andorid_professional_dev_course.data.MainScreenData
+package com.example.andorid_professional_dev_course.data.MainScreenData.retrofit
 
 import android.util.Log
+import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
 import com.example.andorid_professional_dev_course.domain.RepositoryInt
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call

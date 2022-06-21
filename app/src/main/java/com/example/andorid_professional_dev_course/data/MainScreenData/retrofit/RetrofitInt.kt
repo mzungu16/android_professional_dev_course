@@ -1,5 +1,6 @@
-package com.example.andorid_professional_dev_course.data.MainScreenData
+package com.example.andorid_professional_dev_course.data.MainScreenData.retrofit
 
+import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

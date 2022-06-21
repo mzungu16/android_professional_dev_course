@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andorid_professional_dev_course.R
 import com.example.andorid_professional_dev_course.app
@@ -20,16 +21,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        app.presenter.attach(this)
-        app.presenter.transferResult {
+        val viewModel = ViewModelProvider(
+            this,
+            MainScreenViewModel(app.usecase)
+        ).get(MainScreenViewModel::class.java)
+
+        viewModel.showLanguages()
+
+        viewModel.spinnerList.observe(this) {
             binding.spinnerList.adapter =
                 ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, it)
         }
+
         binding.translateBtn.setOnClickListener {
-            app.presenter.translateMethod(
+            viewModel.showTranslation(
                 binding.spinnerList.selectedItem.toString(),
                 binding.editText.text.toString()
-            ) {
+            )
+            viewModel.resultDTO.observe(this) {
                 mainScreenAdapter.list = it.def.first().tr.first().syn
                 binding.insideLayout.inside.visibility = View.VISIBLE
                 binding.insideLayout.translateResult.text = it.def.first().tr.first().text
@@ -40,10 +49,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        app.presenter.detach()
-        super.onDestroy()
     }
 }
