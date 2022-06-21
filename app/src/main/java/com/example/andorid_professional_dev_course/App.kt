@@ -17,12 +17,3 @@ class App : Application() {
         }
     }
 }
-
-//    private val mainScreenRepo by lazy { MainScreenRepoImpl() }
-//    val usecase: ProjectUsecase.MainScreenUsecase by lazy { MainScreenUsecaseImpl(mainScreenRepo) }
-//}
-//
-//val Context.app: App
-//    get() {
-//        return applicationContext as App
-//    }

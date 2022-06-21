@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
 import com.example.andorid_professional_dev_course.domain.ProjectUsecase
-import io.reactivex.rxjava3.kotlin.subscribeBy
+import kotlinx.coroutines.launch
 
 class MainScreenViewModel(private val usecase: ProjectUsecase.MainScreenUsecase) : ViewModel(),
     ViewModelProvider.Factory {
@@ -20,14 +20,14 @@ class MainScreenViewModel(private val usecase: ProjectUsecase.MainScreenUsecase)
     }
 
     fun showLanguages() {
-        usecase.data.languages().subscribeBy {
-            _spinnerList.postValue(it)
+        usecase.data.scope.launch {
+            _spinnerList.postValue(usecase.data.languages())
         }
     }
 
     fun showTranslation(lang: String, text: String) {
-        usecase.translation.getTranslation(lang, text).subscribeBy {
-            _resultDTO.postValue(it)
+        usecase.data.scope.launch {
+            _resultDTO.postValue(usecase.data.getTranslation(lang, text))
         }
     }
 }
