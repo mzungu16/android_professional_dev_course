@@ -36,7 +36,13 @@ class MainActivity : AppCompatActivity() {
                 binding.editText.text.toString()
             )
             viewModel.resultDTO.observe(this) {
-                mainScreenAdapter.list = it.def.first().tr.first().syn
+                val listToCheck = it.def.first().tr
+                if (it.def.first().tr.contains(listToCheck.elementAt(1))) {
+                    mainScreenAdapter.list = it.def.first().tr.first().syn
+                } else {
+                    mainScreenAdapter.list = emptyList()
+
+                }
                 binding.insideLayout.inside.visibility = View.VISIBLE
                 binding.insideLayout.translateResult.text = it.def.first().tr.first().text
                 binding.insideLayout.posResult.text = it.def.first().pos
