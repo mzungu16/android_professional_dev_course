@@ -31,9 +31,6 @@ class MainScreenViewModel(private val usecase: ProjectUsecase.MainScreenUsecase)
                 _spinnerList.postValue(it)
             }
         }
-        /* usecase.data.scope.launch {
-             _spinnerList.postValue(usecase.data.languages())
-         }*/
     }
 
     fun showTranslation(lang: String, text: String) {
@@ -44,8 +41,5 @@ class MainScreenViewModel(private val usecase: ProjectUsecase.MainScreenUsecase)
                 _resultDTO.postValue(it)
             }
         }
-        /* usecase.data.scope.launch {
-             _resultDTO.postValue(usecase.data.getTranslation(lang, text))
-         }*/
     }
 }
