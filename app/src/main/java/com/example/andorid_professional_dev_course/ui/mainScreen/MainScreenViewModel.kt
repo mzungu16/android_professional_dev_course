@@ -42,4 +42,8 @@ class MainScreenViewModel(private val usecase: ProjectUsecase.MainScreenUsecase)
             }
         }
     }
+
+    fun insertWord(word: ResultDTO) {
+        usecase.data.insertWordToDB(word)
+    }
 }

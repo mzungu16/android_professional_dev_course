@@ -3,9 +3,12 @@ package com.example.andorid_professional_dev_course.ui.mainScreen
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
+import com.example.andorid_professional_dev_course.data.database.WordDatabase
 import com.example.andorid_professional_dev_course.databinding.ActivityMainBinding
 import com.example.andorid_professional_dev_course.domain.ProjectUsecase
 import org.koin.android.ext.android.inject
@@ -15,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainScreenAdapter = MainScreenAdapter()
     private val usecase: ProjectUsecase.MainScreenUsecase by inject(named("MainScreenUsecaseImpl"))
+    private val db: WordDatabase by inject(named("WordDatabase"))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -23,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             this,
             MainScreenViewModel(usecase)
         ).get(MainScreenViewModel::class.java)
+        lateinit var resultDTO: ResultDTO
 
         viewModel.showLanguages()
 
@@ -37,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                 binding.editText.text.toString()
             )
             viewModel.resultDTO.observe(this) {
+                resultDTO = it
                 if (it.def.first().tr.first().syn == null) {
                     mainScreenAdapter.list = emptyList()
                 } else {
@@ -52,6 +58,11 @@ class MainActivity : AppCompatActivity() {
                     adapter = mainScreenAdapter
                 }
             }
+        }
+
+        binding.addBtn.setOnClickListener {
+            viewModel.insertWord(resultDTO)
+            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
         }
     }
 }

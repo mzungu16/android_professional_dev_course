@@ -69,6 +69,21 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="100dp" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="200dp"
+            android:elevation="20dp">
+            <ImageView
+                android:id="@+id/add_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_done" />
+        </com.google.android.material.card.MaterialCardView>
+
+
     </FrameLayout>
 
 
