@@ -7,84 +7,90 @@
     android:orientation="vertical"
     tools:context=".ui.mainScreen.MainActivity">
 
-    <FrameLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/material_view2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/botton_navigation"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/material_view2"
-                style="@style/material_card_style"
-                app:cardBackgroundColor="@color/lt_red">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Слово...">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/translate_btn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:textSize="25sp"
-                    android:background="@color/lt_red"
-                    android:hint="Слово..." />
+                    android:text="Translate" />
 
-            </com.google.android.material.card.MaterialCardView>
+              <Spinner
+                  android:id="@+id/spinner_list"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="10dp"
+                  />
+            </LinearLayout>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/material_view"
-                style="@style/material_card_style"
-                app:cardBackgroundColor="@color/lt_grey">
-
-                <include
-                    android:id="@+id/inside_layout"
-                    layout="@layout/inside_layout" />
-
-            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="30dp"
-            android:elevation="20dp">
 
-            <ImageView
-                android:id="@+id/translate_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_sync" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <Spinner
-            android:id="@+id/spinner_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="100dp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="200dp"
-            android:elevation="20dp">
-            <ImageView
-                android:id="@+id/add_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_done" />
-        </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
-    </FrameLayout>
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:rotation="90"
+        android:src="@drawable/ic_sync"
+        app:layout_constraintBottom_toTopOf="@id/material_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/material_view2" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/material_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:checkable="true"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@id/botton_navigation"
+        app:layout_constraintTop_toBottomOf="@id/picture">
+
+        <include
+            android:id="@+id/inside_layout"
+            layout="@layout/inside_layout" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
