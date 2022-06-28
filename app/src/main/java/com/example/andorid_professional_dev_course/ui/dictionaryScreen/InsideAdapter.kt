@@ -28,7 +28,7 @@ class InsideAdapter : RecyclerView.Adapter<InsideAdapter.InsideViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InsideViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.dictionary_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return InsideViewHolder(view)
     }
 

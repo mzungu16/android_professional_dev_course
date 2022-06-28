@@ -5,101 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.mainScreen.MainActivity">
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/material_view2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:elevation="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Слово...">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/translate_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Translate" />
-
-              <Spinner
-                  android:id="@+id/spinner_list"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="10dp"
-                  />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <ImageView
-        android:id="@+id/picture"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:rotation="90"
-        android:src="@drawable/ic_sync"
-        app:layout_constraintBottom_toTopOf="@id/material_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/material_view2" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/material_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:checkable="true"
-        android:clickable="true"
-        android:elevation="8dp"
-        android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@id/botton_navigation"
-        app:layout_constraintTop_toBottomOf="@id/picture">
-
-        <include
-            android:id="@+id/inside_layout"
-            layout="@layout/inside_layout" />
-
-    </com.google.android.material.card.MaterialCardView>
+    tools:context=".ui.MainActivity">
 
     <FrameLayout
         android:id="@+id/container"
-        android:visibility="gone"
         android:layout_width="match_parent"
+        android:layout_margin="8dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/botton_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/botton_navigation"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -111,5 +26,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

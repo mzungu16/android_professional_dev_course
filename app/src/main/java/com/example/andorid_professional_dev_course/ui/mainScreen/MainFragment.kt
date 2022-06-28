@@ -1,29 +1,36 @@
 package com.example.andorid_professional_dev_course.ui.mainScreen
 
-import android.content.Intent
+import android.R
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.andorid_professional_dev_course.R
 import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
-import com.example.andorid_professional_dev_course.databinding.ActivityMainBinding
+import com.example.andorid_professional_dev_course.databinding.FragmentMainBinding
 import com.example.andorid_professional_dev_course.domain.ProjectUsecase
-import com.example.andorid_professional_dev_course.ui.dictionaryScreen.DictionaryActivity
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainFragment : Fragment() {
     private val mainScreenAdapter = MainScreenAdapter()
     private val usecase: ProjectUsecase.MainScreenUsecase by inject(named("MainScreenUsecaseImpl"))
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val viewModel = ViewModelProvider(
             this,
             MainScreenViewModel(usecase)
@@ -32,18 +39,20 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.showLanguages()
 
-        viewModel.spinnerList.observe(this) {
+        viewModel.spinnerList.observe(viewLifecycleOwner) {
             binding.spinnerList.adapter =
-                ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, it)
+                ArrayAdapter(requireContext(), R.layout.simple_spinner_dropdown_item, it)
         }
 
         binding.translateBtn.setOnClickListener {
             binding.materialView.isChecked = false
+            binding.materialView.isClickable = true
+
             viewModel.showTranslation(
                 binding.spinnerList.selectedItem.toString(),
                 binding.editText.text.toString()
             )
-            viewModel.resultDTO.observe(this) {
+            viewModel.resultDTO.observe(viewLifecycleOwner) {
                 resultDTO = it
                 if (it.def.first().tr.first().syn == null) {
                     mainScreenAdapter.list = emptyList()
@@ -66,16 +75,15 @@ class MainActivity : AppCompatActivity() {
         binding.materialView.setOnLongClickListener {
             binding.materialView.isChecked = true
             viewModel.insertWord(resultDTO)
-            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Added", Toast.LENGTH_SHORT).show()
             true
         }
 
-        binding.bottonNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.translate -> startActivity(Intent(this, MainActivity::class.java))
-                R.id.dictionary -> startActivity(Intent(this, DictionaryActivity::class.java))
-            }
-            true
-        }
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

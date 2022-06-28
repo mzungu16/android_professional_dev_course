@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    tools:context=".ui.dictionaryScreen.DictionaryActivity">
+    android:clickable="true"
+    android:background="@color/white"
+    android:focusable="true">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_dic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/dictionary_item"/>
+        tools:listitem="@layout/dictionary_item" />
 
 </FrameLayout>
