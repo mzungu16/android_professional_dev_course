@@ -34,6 +34,7 @@ class MainScreenRepoImpl(private val api: RetrofitInt, private val db: WordDatab
             db.getDao().insertWord(
                 WordTableEntity(
                     0,
+                    word.def.first().text,
                     word.def.first().tr.first().text,
                     Converter().fromSynonymsToString(list),
                     word.def.first().pos

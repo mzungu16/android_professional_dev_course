@@ -3,6 +3,7 @@ package com.example.andorid_professional_dev_course.ui.dictionaryScreen
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andorid_professional_dev_course.databinding.ActivityDictionaryBinding
 import com.example.andorid_professional_dev_course.domain.ProjectUsecase
 import org.koin.android.ext.android.inject
@@ -10,6 +11,7 @@ import org.koin.core.qualifier.named
 
 class DictionaryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDictionaryBinding
+    private val dAdapter = DictionaryAdapter()
     private val usecase: ProjectUsecase.DictionaryUsecase by inject(named("DictionaryScreenUsecaseImpl"))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +23,16 @@ class DictionaryActivity : AppCompatActivity() {
             DictionaryViewModel(usecase)
         ).get(DictionaryViewModel::class.java)
 
+        viewModel.getWords()
+
+        viewModel.listOfWord.observe(this) {
+            dAdapter.list = it
+        }
+
+        binding.recyclerViewDic.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = dAdapter
+        }
 
     }
 }

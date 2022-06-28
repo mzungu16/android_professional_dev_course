@@ -8,6 +8,7 @@ import androidx.room.TypeConverters
 @Entity(tableName = "word_table")
 data class WordTableEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
+    @ColumnInfo(name = "word") val word: String,
     @ColumnInfo(name = "translation") val translation: String,
     @TypeConverters(Converter::class)
     @ColumnInfo(name = "synonyms") val synonyms: String,
