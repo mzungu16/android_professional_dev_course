@@ -1,44 +1,57 @@
 package com.example.andorid_professional_dev_course.ui.mainScreen
 
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import com.example.andorid_professional_dev_course.R
-import com.example.andorid_professional_dev_course.app
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andorid_professional_dev_course.databinding.ActivityMainBinding
-import com.example.andorid_professional_dev_course.domain.Contracts
+import com.example.andorid_professional_dev_course.domain.ProjectUsecase
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val mainScreenAdapter = MainScreenAdapter()
+    private val usecase: ProjectUsecase.MainScreenUsecase by inject(named("MainScreenUsecaseImpl"))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        app.presenter.attach(this)
-        app.presenter.transferResult {
+        val viewModel = ViewModelProvider(
+            this,
+            MainScreenViewModel(usecase)
+        ).get(MainScreenViewModel::class.java)
+
+        viewModel.showLanguages()
+
+        viewModel.spinnerList.observe(this) {
             binding.spinnerList.adapter =
                 ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, it)
         }
+
         binding.translateBtn.setOnClickListener {
-            app.presenter.translateMethod(
+            viewModel.showTranslation(
                 binding.spinnerList.selectedItem.toString(),
                 binding.editText.text.toString()
-            ) {
-                binding.layout.visibility = View.VISIBLE
-                binding.resultText.text = it.def.first().tr.first().text
-                binding.posId.text = it.def.first().pos
-                binding.syn1.text = it.def.first().tr.first().syn[0].text
-                binding.syn2.text = it.def.first().tr.first().syn[1].text
-                binding.syn3.text = it.def.first().tr.first().syn[2].text
+            )
+            viewModel.resultDTO.observe(this) {
+                if (it.def.first().tr.first().syn == null) {
+                    mainScreenAdapter.list = emptyList()
+                } else {
+                    it.def.first().tr.first().syn?.let { listSyn ->
+                        mainScreenAdapter.list = listSyn
+                    }
+                }
+                binding.insideLayout.inside.visibility = View.VISIBLE
+                binding.insideLayout.translateResult.text = it.def.first().tr.first().text
+                binding.insideLayout.posResult.text = it.def.first().pos
+                binding.insideLayout.recyclerView.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = mainScreenAdapter
+                }
             }
         }
-    }
-
-    override fun onDestroy() {
-        app.presenter.detach()
-        super.onDestroy()
     }
 }
