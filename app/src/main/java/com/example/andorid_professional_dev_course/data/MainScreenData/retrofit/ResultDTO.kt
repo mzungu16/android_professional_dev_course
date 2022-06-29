@@ -1,7 +1,5 @@
 package com.example.andorid_professional_dev_course.data.MainScreenData
 
-import android.transition.Transition
-
 data class ResultDTO(
     val def: List<Articles>
 )
@@ -16,7 +14,7 @@ data class Articles(
 
 data class Translations(
     val text: String,
-    val syn: List<Synonyms>
+    val syn: List<Synonyms>?
 )
 
 data class Meanings(

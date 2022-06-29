@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andorid_professional_dev_course.databinding.ActivityMainBinding
 import com.example.andorid_professional_dev_course.domain.ProjectUsecase
 import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainScreenAdapter = MainScreenAdapter()
-    private val usecase: ProjectUsecase.MainScreenUsecase by inject()
+    private val usecase: ProjectUsecase.MainScreenUsecase by inject(named("MainScreenUsecaseImpl"))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -36,7 +37,13 @@ class MainActivity : AppCompatActivity() {
                 binding.editText.text.toString()
             )
             viewModel.resultDTO.observe(this) {
-                mainScreenAdapter.list = it.def.first().tr.first().syn
+                if (it.def.first().tr.first().syn == null) {
+                    mainScreenAdapter.list = emptyList()
+                } else {
+                    it.def.first().tr.first().syn?.let { listSyn ->
+                        mainScreenAdapter.list = listSyn
+                    }
+                }
                 binding.insideLayout.inside.visibility = View.VISIBLE
                 binding.insideLayout.translateResult.text = it.def.first().tr.first().text
                 binding.insideLayout.posResult.text = it.def.first().pos
