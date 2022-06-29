@@ -24,7 +24,6 @@ class InsideAdapter : RecyclerView.Adapter<InsideAdapter.InsideViewHolder>() {
 
     override fun onBindViewHolder(holder: InsideViewHolder, position: Int) {
         holder.bind(list[position])
-        println("TAG $list")
     }
 
     override fun getItemCount() = list.size

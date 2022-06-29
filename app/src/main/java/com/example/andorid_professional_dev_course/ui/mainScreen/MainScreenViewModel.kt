@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
 import com.example.andorid_professional_dev_course.domain.ProjectUsecase
+import com.example.mylibrary.Printer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -52,12 +53,12 @@ class MainScreenViewModel(private val usecase: ProjectUsecase.MainScreenUsecase)
                             if (response.isSuccessful) {
                                 _resultDTO.postValue(response.body())
                             } else {
-                                println("EEE  ${response.errorBody()} ")
+                                Printer.print(response.errorBody().toString())
                             }
                         }
 
                         override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                            println("EEE  ${t.printStackTrace()}")
+                            Printer.print(t.printStackTrace().toString())
                         }
 
                     })

@@ -1,10 +1,10 @@
 package com.example.andorid_professional_dev_course.data.MainScreenData.retrofit
 
 import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
-import com.example.andorid_professional_dev_course.data.MainScreenData.Synonyms
 import com.example.andorid_professional_dev_course.data.database.Converter
 import com.example.andorid_professional_dev_course.data.database.WordDatabase
 import com.example.andorid_professional_dev_course.data.database.WordTableEntity
+import com.example.mylibrary.Printer
 import kotlinx.coroutines.flow.flow
 import java.util.concurrent.Executors
 
@@ -15,12 +15,12 @@ class MainScreenRepoImpl(private val api: RetrofitInt, private val db: WordDatab
     var text: String = ""
 
     val flow = flow {
-        println("TAG ${Thread.currentThread().name}")
+        Printer.print(Thread.currentThread().name)
         emit(api.getLanguages(key).execute().body())
     }
 
     val flow2 = flow {
-        println("TAG ${Thread.currentThread().name}")
+        Printer.print(Thread.currentThread().name)
         emit(api.getTranslation(key, lang, text))
     }
 
