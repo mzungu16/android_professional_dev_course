@@ -7,6 +7,4 @@ class MainScreenUsecaseImpl(private val api: MainScreenRepoImpl) :
     ProjectUsecase.MainScreenUsecase {
     override val data: MainScreenRepoImpl
         get() = api
-    override val translation: MainScreenRepoImpl
-        get() = api
 }
