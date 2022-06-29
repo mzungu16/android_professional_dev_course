@@ -10,6 +10,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class MainScreenViewModel(private val usecase: ProjectUsecase.MainScreenUsecase) : ViewModel(),
     ViewModelProvider.Factory {
@@ -35,11 +40,33 @@ class MainScreenViewModel(private val usecase: ProjectUsecase.MainScreenUsecase)
 
     fun showTranslation(lang: String, text: String) {
         scope.launch {
-            usecase.data.lang = lang
-            usecase.data.text = text
-            usecase.data.flow2.collect {
-                _resultDTO.postValue(it)
+            withContext(Dispatchers.Main) {
+                usecase.data.lang = lang
+                usecase.data.text = text
+                usecase.data.flow2.collect {
+                    it.enqueue(object : Callback<ResultDTO> {
+                        override fun onResponse(
+                            call: Call<ResultDTO>,
+                            response: Response<ResultDTO>
+                        ) {
+                            if (response.isSuccessful) {
+                                _resultDTO.postValue(response.body())
+                            } else {
+                                println("EEE  ${response.errorBody()} ")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                            println("EEE  ${t.printStackTrace()}")
+                        }
+
+                    })
+                }
             }
         }
+    }
+
+    fun insertWord(word: ResultDTO) {
+        usecase.data.insertWordToDB(word)
     }
 }

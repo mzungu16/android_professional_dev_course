@@ -1,8 +1,7 @@
 package com.example.andorid_professional_dev_course.domain
 
 import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
-import com.example.andorid_professional_dev_course.data.MainScreenData.Synonyms
-import com.example.andorid_professional_dev_course.ui.mainScreen.MainActivity
+import com.example.andorid_professional_dev_course.ui.MainActivity
 
 interface Contracts {
     interface MainScreenContracts {

@@ -5,72 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.mainScreen.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
+        android:layout_margin="8dp"
         android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/botton_navigation"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/material_view2"
-                style="@style/material_card_style"
-                app:cardBackgroundColor="@color/lt_red">
-
-                <EditText
-                    android:id="@+id/edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:textSize="25sp"
-                    android:background="@color/lt_red"
-                    android:hint="Слово..." />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/material_view"
-                style="@style/material_card_style"
-                app:cardBackgroundColor="@color/lt_grey">
-
-                <include
-                    android:id="@+id/inside_layout"
-                    layout="@layout/inside_layout" />
-
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="30dp"
-            android:elevation="20dp">
-
-            <ImageView
-                android:id="@+id/translate_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_sync" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <Spinner
-            android:id="@+id/spinner_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="100dp" />
-
-    </FrameLayout>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/botton_navigation"
@@ -81,5 +26,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
