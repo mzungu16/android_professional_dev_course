@@ -21,7 +21,7 @@ class MainScreenRepoImpl(private val api: RetrofitInt, private val db: WordDatab
 
     val flow2 = flow {
         println("TAG ${Thread.currentThread().name}")
-        emit(api.getTranslation(key, lang, text).execute().body())
+        emit(api.getTranslation(key, lang, text))
     }
 
     fun insertWordToDB(word: ResultDTO) {

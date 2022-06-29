@@ -53,7 +53,7 @@ class DictionaryAdapter(private val onWordClickListener: OnItemClick) :
         private val inputText = itemView.findViewById<TextView>(R.id.text_res)
         private val translatedText = itemView.findViewById<TextView>(R.id.result_of_translate)
         private val posText = itemView.findViewById<TextView>(R.id.result_of_pos)
-        val insideAdapter = InsideAdapter()
+        private val insideAdapter = InsideAdapter()
 
         fun bind(item: WordTableEntity) {
             Glide.with(itemView)

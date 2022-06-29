@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        android:checkable="false"
+        android:checkable="true"
         android:clickable="false"
         android:elevation="8dp"
         android:focusable="true">

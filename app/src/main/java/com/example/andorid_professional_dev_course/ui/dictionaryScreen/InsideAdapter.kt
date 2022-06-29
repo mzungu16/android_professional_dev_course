@@ -4,21 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.andorid_professional_dev_course.R
-import com.example.andorid_professional_dev_course.data.DictionaryScreenData.DiffCallBackForInsideAdapter
 
 class InsideAdapter : RecyclerView.Adapter<InsideAdapter.InsideViewHolder>() {
     var list: List<String> = listOf()
-        set(listParam) {
-            val diffCallBack = DiffCallBackForInsideAdapter(this.list, listParam)
-            DiffUtil.calculateDiff(diffCallBack).also {
-                it.dispatchUpdatesTo(this)
-            }
-            field = listParam
-        }
-
     inner class InsideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textValue = itemView.findViewById<TextView>(R.id.item_text)
         fun bind(item: String) {

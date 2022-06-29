@@ -46,36 +46,42 @@ class MainFragment : Fragment() {
 
         binding.translateBtn.setOnClickListener {
             binding.materialView.isChecked = false
-            binding.materialView.isClickable = true
-
             viewModel.showTranslation(
                 binding.spinnerList.selectedItem.toString(),
                 binding.editText.text.toString()
             )
             viewModel.resultDTO.observe(viewLifecycleOwner) {
-                resultDTO = it
-                if (it.def.first().tr.first().syn == null) {
-                    mainScreenAdapter.list = emptyList()
-                } else {
-                    it.def.first().tr.first().syn?.let { listSyn ->
-                        mainScreenAdapter.list = listSyn
+                if (it.def.isNotEmpty()) {
+                    binding.materialView.isClickable = true
+                    resultDTO = it
+                    if (it.def.first().tr.first().syn == null) {
+                        mainScreenAdapter.list = emptyList()
+                    } else {
+                        it.def.first().tr.first().syn?.let { listSyn ->
+                            mainScreenAdapter.list = listSyn
+                        }
                     }
+                    binding.insideLayout.inside.visibility = View.VISIBLE
+                    binding.insideLayout.translateResult.text = it.def.first().tr.first().text
+                    binding.insideLayout.posResult.text = it.def.first().pos
+                    binding.insideLayout.recyclerView.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = mainScreenAdapter
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "No result", Toast.LENGTH_SHORT).show()
+                    binding.insideLayout.inside.visibility = View.GONE
                 }
-                binding.materialView.isChecked = false
-                binding.insideLayout.inside.visibility = View.VISIBLE
-                binding.insideLayout.translateResult.text = it.def.first().tr.first().text
-                binding.insideLayout.posResult.text = it.def.first().pos
-                binding.insideLayout.recyclerView.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = mainScreenAdapter
-                }
+
             }
         }
 
         binding.materialView.setOnLongClickListener {
-            binding.materialView.isChecked = true
-            viewModel.insertWord(resultDTO)
-            Toast.makeText(requireContext(), "Added", Toast.LENGTH_SHORT).show()
+            if (binding.materialView.isClickable) {
+                binding.materialView.isChecked = true
+                viewModel.insertWord(resultDTO)
+                Toast.makeText(requireContext(), "Added", Toast.LENGTH_SHORT).show()
+            }
             true
         }
 
