@@ -3,9 +3,12 @@ package com.example.andorid_professional_dev_course.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.andorid_professional_dev_course.R
+import com.example.andorid_professional_dev_course.data.CheckNetwork
 import com.example.andorid_professional_dev_course.databinding.ActivityMainBinding
 import com.example.andorid_professional_dev_course.ui.dictionaryScreen.DictionaryFragment
 import com.example.andorid_professional_dev_course.ui.mainScreen.MainFragment
+import com.google.android.material.snackbar.Snackbar
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -17,6 +20,23 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .add(R.id.container, MainFragment())
             .commit()
+
+        val connection = CheckNetwork(this)
+        connection.observe(this) {
+            if (it) {
+                Snackbar.make(
+                    binding.root,
+                    "Connected",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    "No Internet",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
 
         binding.bottonNavigation.setOnItemSelectedListener {
             when (it.itemId) {

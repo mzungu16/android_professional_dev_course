@@ -9,12 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andorid_professional_dev_course.databinding.ActivityDictionaryBinding
 import com.example.andorid_professional_dev_course.domain.ProjectUsecase
+import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
 class DictionaryFragment : Fragment(),DictionaryAdapter.OnItemClick {
     private val dAdapter = DictionaryAdapter(this)
-    private val usecase: ProjectUsecase.DictionaryUsecase by inject(named("DictionaryScreenUsecaseImpl"))
+    private val scope by lazy { getKoin().getOrCreateScope("", named("Project_scope")) }
+//    private val usecase: ProjectUsecase.DictionaryUsecase by inject(named("DictionaryScreenUsecaseImpl"))
     private var _binding: ActivityDictionaryBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -29,7 +31,7 @@ class DictionaryFragment : Fragment(),DictionaryAdapter.OnItemClick {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = ViewModelProvider(
             this,
-            DictionaryViewModel(usecase)
+            DictionaryViewModel(scope.get(named("DictionaryScreenUsecaseImpl")))
         ).get(DictionaryViewModel::class.java)
 
         viewModel.getWords()
