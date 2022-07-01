@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
 import com.example.andorid_professional_dev_course.databinding.FragmentMainBinding
 import com.example.andorid_professional_dev_course.domain.ProjectUsecase
+import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
 class MainFragment : Fragment() {
     private val mainScreenAdapter = MainScreenAdapter()
-    private val usecase: ProjectUsecase.MainScreenUsecase by inject(named("MainScreenUsecaseImpl"))
+    private val scope by lazy { getKoin().getOrCreateScope("", named("Project_scope")) }
+//    private val usecase: ProjectUsecase.MainScreenUsecase by inject(named("MainScreenUsecaseImpl"))
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -33,7 +35,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = ViewModelProvider(
             this,
-            MainScreenViewModel(usecase)
+            MainScreenViewModel(scope.get(named("MainScreenUsecaseImpl")))
         ).get(MainScreenViewModel::class.java)
         lateinit var resultDTO: ResultDTO
 
@@ -89,7 +91,9 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        scope.close()
         super.onDestroyView()
         _binding = null
+
     }
 }
