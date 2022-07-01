@@ -2,6 +2,7 @@ package com.example.andorid_professional_dev_course.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.andorid_professional_dev_course.R
 import com.example.andorid_professional_dev_course.data.CheckNetwork
 import com.example.andorid_professional_dev_course.databinding.ActivityMainBinding
@@ -14,11 +15,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val splashScreen = installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.container, MainFragment())
+            .add(R.id.container, MainFragment(splashScreen))
             .commit()
 
         val connection = CheckNetwork(this)
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.translate -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MainFragment())
+                        .replace(R.id.container, MainFragment(splashScreen))
                         .commit()
                 }
                 R.id.dictionary -> {
