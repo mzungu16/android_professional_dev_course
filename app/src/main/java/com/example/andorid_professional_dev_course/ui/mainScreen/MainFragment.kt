@@ -7,22 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.splashscreen.SplashScreen
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andorid_professional_dev_course.data.MainScreenData.ResultDTO
 import com.example.andorid_professional_dev_course.databinding.FragmentMainBinding
-import com.example.andorid_professional_dev_course.domain.ProjectUsecase
 import org.koin.android.ext.android.getKoin
-import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
-class MainFragment : Fragment() {
+class MainFragment(private val splashScreen: SplashScreen) : Fragment() {
     private val mainScreenAdapter = MainScreenAdapter()
     private val scope by lazy { getKoin().getOrCreateScope("", named("Project_scope")) }
-//    private val usecase: ProjectUsecase.MainScreenUsecase by inject(named("MainScreenUsecaseImpl"))
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,17 +32,18 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        splashScreen.setKeepOnScreenCondition { true }
         val viewModel = ViewModelProvider(
             this,
             MainScreenViewModel(scope.get(named("MainScreenUsecaseImpl")))
         ).get(MainScreenViewModel::class.java)
         lateinit var resultDTO: ResultDTO
-
         viewModel.showLanguages()
 
         viewModel.spinnerList.observe(viewLifecycleOwner) {
             binding.spinnerList.adapter =
                 ArrayAdapter(requireContext(), R.layout.simple_spinner_dropdown_item, it)
+            splashScreen.setKeepOnScreenCondition { false }
         }
 
         binding.translateBtn.setOnClickListener {
@@ -96,4 +96,5 @@ class MainFragment : Fragment() {
         _binding = null
 
     }
+
 }

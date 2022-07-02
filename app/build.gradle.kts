@@ -57,6 +57,8 @@ dependencies {
     implementation ("io.reactivex.rxjava3:rxjava:3.1.4")
     implementation ("io.reactivex.rxjava3:rxkotlin:3.0.1")
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
+    //SplashSceen
+    implementation ("androidx.core:core-splashscreen:1.0.0-rc01")
     // Retrofit
     implementation ("com.squareup.okhttp3:logging-interceptor:4.2.1")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
