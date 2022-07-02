@@ -13,10 +13,9 @@ import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
-class DictionaryFragment : Fragment(),DictionaryAdapter.OnItemClick {
+class DictionaryFragment : Fragment(), DictionaryAdapter.OnItemClick {
     private val dAdapter = DictionaryAdapter(this)
     private val scope by lazy { getKoin().getOrCreateScope("", named("Project_scope")) }
-//    private val usecase: ProjectUsecase.DictionaryUsecase by inject(named("DictionaryScreenUsecaseImpl"))
     private var _binding: ActivityDictionaryBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(

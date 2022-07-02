@@ -19,8 +19,6 @@ import org.koin.core.qualifier.named
 class MainFragment(private val splashScreen: SplashScreen) : Fragment() {
     private val mainScreenAdapter = MainScreenAdapter()
     private val scope by lazy { getKoin().getOrCreateScope("", named("Project_scope")) }
-
-    //    private val usecase: ProjectUsecase.MainScreenUsecase by inject(named("MainScreenUsecaseImpl"))
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
